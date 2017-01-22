@@ -10,34 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(char *str)
+int		match(char *s1, char *s2)
 {
-	int	i;
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-int	match(char *s1, char *s2)
-{
-	int s1_len;
-	int s2_len;
-
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-
-	if(s1_len != s2_len)
-		return(0);
-
-	int i = 0;
-	while(i < s1_len){
-		if(s2[i] != '*' && s1[i] != s2[i])
-		{
-			return (0);
-		}
-		i++;
+	if (*s1 == '\0' || *s2 == '\0')
+	{
+		if (*s1 == '\0' && *s2 == '\0')
+			return (1);
+		return (0);
 	}
-	return (1);
+
+	if (*s1 == *s2)
+		return (match(s1 + 1, s2 + 1));
+	else if (*s2 == '*')
+		return (match(s1 + 1, s2) || match(s1 + 1, s2 + 1));
+	else
+		return (0);
 }
